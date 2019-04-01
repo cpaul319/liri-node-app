@@ -1,8 +1,8 @@
 require("dotenv").config();
  
 var keys = require("./keys.js");
-var spotify = new Spotify(keys.spotify); 
 var Spotify = require("node-spotify-api");
+var spotify = new Spotify(keys.spotify); 
 var axios = require("axios");
 var moment = require("moment");
 var fs = require("fs");
@@ -50,6 +50,7 @@ var parameter = process.argv.slice(3).join(" ");
                     console.log("Venue location: " +  response.data[i].venue.city + ", " +
                     response.data[i].venue.region + " " + response.data[i].venue.country);
                     console.log("Date of the Event: " + moment(response.data[i].venue.datetime).format("MM-DD-YYYY"));
+                    console.log("                              ");
                 }
             }
         );
