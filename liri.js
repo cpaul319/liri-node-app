@@ -7,17 +7,12 @@ var axios = require("axios");
 var moment = require("moment");
 var fs = require("fs");
 
-
-
 var command = process.argv[2];
 var parameter = process.argv.slice(3).join(" ");
 
 switch (command) {
   case "concert-this":
-    if (parameter) {
-      displayConcert(parameter);
-    }
-    else displayConcert("Trapt");
+    displayConcert(parameter);
     break;
   case "spotify-this-song":
     if (parameter === "") {
@@ -38,6 +33,7 @@ switch (command) {
   default:
     console.log("Please try again. Liri didn't get that.");
 }
+
 function displayConcert(parameter) {
   var queryUrl = "https://rest.bandsintown.com/artists/" + parameter + "/events?app_id=codingbootcamp";
   if (parameter === "") {
@@ -45,19 +41,26 @@ function displayConcert(parameter) {
   } else {
     axios.get(queryUrl).then(
       function (response) {
-        for (i = 0; i < response.data.length; i++) {
-          console.log("Here is a list of concerts for " + parameter);
-          console.log("Name of the venue: " + response.data[i].venue.name);
-          console.log("Venue location: " + response.data[i].venue.city + ", " +
-            response.data[i].venue.region + " " + response.data[i].venue.country);
-          console.log("Date of the Event: " + (moment(response.data[i].datetime).format('MM/DD/YYYY')));
-          console.log("  ");
+        if (response.data.length === 0) {
+          console.log("There is no concert information for " + parameter + ". Please try again.");
+        } else {
+          for (i = 0; i < response.data.length; i++) {
+            console.log("\r\nHere is a list of concerts for " + parameter);
+            console.log("Name of the venue: " + response.data[i].venue.name);
+            console.log("Venue location: " + response.data[i].venue.city + ", " +
+              response.data[i].venue.region + " " + response.data[i].venue.country);
+            console.log("Date of the Event: " + (moment(response.data[i].datetime).format('MM/DD/YYYY')));
+
+          }
         }
       }
-    );
+    )
+      .catch(function (err) {
+        console.log(err);
+        console.log("\r\n Something went wrong. Check your spelling and try entering a band/artist again");
+      });
   };
 };
-
 
 function displaySong(parameter) {
   if (parameter === "") {
@@ -69,26 +72,23 @@ function displaySong(parameter) {
       query: parameter
     })
     .then(function (response) {
-     
-      for (i = 0; i <=10; i++) {
-        
-        console.log("The song's name: " + response.tracks.items[i].name);
+
+      for (j = 0; j <= 10; j++) {
+        console.log("\r\nThe song's name: " + response.tracks.items[j].name);
         console.log("A preview link of the song from Spotify: "
-          + response.tracks.items[i].external_urls.spotify);
-        console.log("Artist(s): " + response.tracks.items[i].album.artists[0].name);
-        console.log("The album that the song is from: " + response.tracks.items[i].album.name);
-        console.log("  ");
+          + response.tracks.items[j].external_urls.spotify);
+        console.log("Artist(s): " + response.tracks.items[j].album.artists[0].name);
+        console.log("The album that the song is from: " + response.tracks.items[j].album.name);
       }
     })
     .catch(function (err) {
-      console.log(err);
+      console.log("\r\n Something went wrong. " + parameter + ", didn't come up in the search. Check your spelling and try entering another song.");
+      // console.log(err);
     });
 };
 
 function displayMovie(parameter) {
   var queryURl = "http://www.omdbapi.com/?t=" + parameter + "&y=&plot=full&apikey=trilogy&tomatoes=true";
-
-
   if (parameter === "") {
     // parameter = "Mr. Nobody";
     console.log("If you haven't watched 'Mr. Nobody', then you should: <http://www.imdb.com/title/tt0485947/>");
@@ -96,28 +96,28 @@ function displayMovie(parameter) {
   } else {
     axios.get(queryURl).then(
       function (response) {
-        console.log("Here is the result for" + parameter + "---------");
         console.log("Title of the movie: " + response.data.Title);
         console.log("The year the movie came out: " + response.data.Year);
         console.log("IMDB Rating of the movie: " + response.data.imdbRating);
         console.log("Rotten Tomatoes Rating of the movie: " + response.data.Ratings[1].Value);
-
         console.log("Country where the movie was produced: " + response.data.Country);
         console.log("Language of the movie: " + response.data.Language);
         console.log("Plot of the movie: " + response.data.Plot);
         console.log("Actors in the movie: " + response.data.Actors);
       }
-    );
+    )
+      .catch(function (err) {
+        console.log(err);
+        console.log("\r\n Something went wrong. Check your spelling and try entering another movie");
+      });
   };
 };
 
 function doWhatItSays() {
-
   fs.readFile("random.txt", "utf8", function (err, data) {
     if (err) {
       return console.log(err);
     }
-
     displaySong(data);
   });
 }
