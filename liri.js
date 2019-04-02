@@ -10,6 +10,7 @@ var fs = require("fs");
 var command = process.argv[2];
 var parameter = process.argv.slice(3).join(" ");
 
+function userPrompt(command, parameter){
 switch (command) {
   case "concert-this":
     displayConcert(parameter);
@@ -17,7 +18,6 @@ switch (command) {
   case "spotify-this-song":
     if (parameter === "") {
       displaySong("The Sign by Ace of Base");
-
     }
     else displaySong(parameter);
     break;
@@ -33,7 +33,8 @@ switch (command) {
   default:
     console.log("Please try again. Liri didn't get that.");
 }
-
+}
+userPrompt(command, parameter);
 function displayConcert(parameter) {
   var queryUrl = "https://rest.bandsintown.com/artists/" + parameter + "/events?app_id=codingbootcamp";
   if (parameter === "") {
@@ -118,7 +119,8 @@ function doWhatItSays() {
     if (err) {
       return console.log(err);
     }
-    displaySong(data);
+    var defaultFile = data.split(",");
+    userPrompt(defaultFile[0], defaultFile[1]);
   });
 }
 
