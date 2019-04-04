@@ -5,21 +5,26 @@ April 4, 2019
 
 Concert-this
  
- ![concert data with input](images/concertThis.PNG)
+ ![concert data with input](images/concertThis.png)
 
 
 Spotify-this-song
-  ![Spotify-this](images/spotifyThis.PNG)
+  ![Spotify-this](images/spotifyThisSong.png)
+  
+  
+  
 Movie-this
  
- ![Movie output](images/movieThis.PNG)
+ ![Movie output](images/movieThis.png)
 
-  ![spotify this song without output](images/sign.PNG)
+  
 
 DoWhatItSays
 
- ![dowhatitsays data](images/doWhatItSays.PNG)
+ ![dowhatitsays data](images/doWhatItSays.png)
 
 
  Log information
- ![log data](images/log.PNG)
+ 
+ 
+ ![log data](images/log.png)
