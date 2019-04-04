@@ -9,7 +9,10 @@ Concert-this
 
 
 Spotify-this-song
-  ![Spotify-this](images/spotifyThis.png)
+  ![Spotify-this](images/spotifyThisSong.png)
+  
+  
+  
 Movie-this
  
  ![Movie output](images/movieThis.png)
@@ -22,4 +25,6 @@ DoWhatItSays
 
 
  Log information
+ 
+ 
  ![log data](images/log.png)
